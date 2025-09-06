@@ -1,3 +1,9 @@
+## Table of Contents
+
+- [SQL](#sql)
+  - [Subqueries](#subqueries)
+  - [Join](#join)
+
 # SQL
 
 Use the [Ensembl public MySQL Servers](https://www.ensembl.org/info/data/mysql.html?redirect=no) to demonstrate; see the [database schema](https://www.ensembl.org/info/docs/api/core/core_schema.html).
@@ -42,3 +48,25 @@ GROUP BY species_set_id;
 +----------------+----------+
 13 rows in set (0.267 sec)
 ```
+
+## Join
+
+Inner join.
+
+```sql
+SELECT s.species_set_id AS species_set_id, g.name AS name
+FROM species_set s
+JOIN genome_db g ON g.genome_db_id = s.genome_db_id limit 3;
+```
+```
++----------------+----------------+
+| species_set_id | name           |
++----------------+----------------+
+|          34350 | ciona_savignyi |
+|          35716 | ciona_savignyi |
+|          40788 | ciona_savignyi |
++----------------+----------------+
+3 rows in set (0.252 sec)
+
+```
+
