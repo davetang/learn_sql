@@ -3,6 +3,7 @@
 - [SQL](#sql)
   - [Subqueries](#subqueries)
   - [Join](#join)
+  - [GROUP_CONCAT](#group_concat)
 
 # SQL
 
@@ -70,3 +71,27 @@ JOIN genome_db g ON g.genome_db_id = s.genome_db_id limit 3;
 
 ```
 
+## GROUP_CONCAT
+
+Probably not good (tidy) practice, but aggregate string values into a single row.
+
+```sql
+SELECT s.species_set_id AS species_set_id,
+GROUP_CONCAT(g.name ORDER BY g.name SEPARATOR ', ') AS genomes
+FROM species_set s
+JOIN genome_db g ON g.genome_db_id = s.genome_db_id
+GROUP BY s.species_set_id limit 6;
+```
+```
++----------------+-------------------------------------+
+| species_set_id | genomes                             |
++----------------+-------------------------------------+
+|          30076 | ciona_savignyi                      |
+|          30197 | ciona_savignyi, echinops_telfairi   |
+|          30232 | echinops_telfairi                   |
+|          30500 | ciona_savignyi, tupaia_belangeri    |
+|          30501 | ciona_savignyi, erinaceus_europaeus |
+|          30525 | echinops_telfairi, tupaia_belangeri |
++----------------+-------------------------------------+
+6 rows in set (0.252 sec)
+```
