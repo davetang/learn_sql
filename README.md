@@ -5,6 +5,7 @@
   - [Subqueries](#subqueries)
   - [Join](#join)
   - [GROUP_CONCAT](#group_concat)
+  - [HAVING](#having)
 
 # SQL
 
@@ -106,7 +107,6 @@ JOIN genome_db g ON g.genome_db_id = s.genome_db_id limit 3;
 |          40788 | ciona_savignyi |
 +----------------+----------------+
 3 rows in set (0.252 sec)
-
 ```
 
 ## GROUP_CONCAT
@@ -132,4 +132,34 @@ GROUP BY s.species_set_id limit 6;
 |          30525 | echinops_telfairi, tupaia_belangeri |
 +----------------+-------------------------------------+
 6 rows in set (0.252 sec)
+```
+
+## HAVING
+
+`HAVING` is used to filter results after `GROUP BY`; `WHERE` filters rows before grouping.
+
+```sql
+SELECT species_set_id, GROUP_CONCAT(name) AS species
+FROM species_set
+JOIN genome_db USING(genome_db_id)
+GROUP BY species_set_id
+HAVING species LIKE '%homo_sapiens%'
+ORDER BY species_set_id LIMIT 10;
+```
+```
++----------------+------------------------------------+
+| species_set_id | species                            |
++----------------+------------------------------------+
+|          35674 | choloepus_hoffmanni,homo_sapiens   |
+|          35676 | oryctolagus_cuniculus,homo_sapiens |
+|          35678 | otolemur_garnettii,homo_sapiens    |
+|          35680 | dasypus_novemcinctus,homo_sapiens  |
+|          35682 | erinaceus_europaeus,homo_sapiens   |
+|          35684 | echinops_telfairi,homo_sapiens     |
+|          35686 | loxodonta_africana,homo_sapiens    |
+|          35687 | notamacropus_eugenii,homo_sapiens  |
+|          35689 | ochotona_princeps,homo_sapiens     |
+|          35690 | procavia_capensis,homo_sapiens     |
++----------------+------------------------------------+
+10 rows in set (0.246 sec)
 ```
