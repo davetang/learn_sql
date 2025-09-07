@@ -14,6 +14,43 @@ mysql --user=anonymous --host=ensembldb.ensembl.org -A
 use ensembl_compara_113;
 ```
 
+## IN
+
+Instead of the following:
+
+```sql
+SELECT gene_member_id, stable_id
+FROM gene_member
+WHERE gene_member_id = 918113132
+OR gene_member_id = 918948222;
+```
+```
++----------------+--------------------+
+| gene_member_id | stable_id          |
++----------------+--------------------+
+|      918113132 | ENSG00000207721    |
+|      918948222 | ENSMUSG00000065431 |
++----------------+--------------------+
+2 rows in set (0.237 sec)
+```
+
+Use `IN` to match any value in a list.
+
+```sql
+SELECT gene_member_id, stable_id
+FROM gene_member
+WHERE gene_member_id IN (918113132, 918948222);
+```
+```
++----------------+--------------------+
+| gene_member_id | stable_id          |
++----------------+--------------------+
+|      918113132 | ENSG00000207721    |
+|      918948222 | ENSMUSG00000065431 |
++----------------+--------------------+
+2 rows in set (0.237 sec)
+```
+
 ## Subqueries
 
 Create a subquery that finds rows where the `species_set_id` column is repeated over 20 times.
