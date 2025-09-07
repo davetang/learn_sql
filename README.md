@@ -3,7 +3,7 @@
 - [SQL](#sql)
   - [IN](#in)
   - [Subqueries](#subqueries)
-  - [Join](#join)
+  - [JOIN](#join)
   - [GROUP_CONCAT](#group_concat)
   - [HAVING](#having)
 
@@ -89,7 +89,7 @@ GROUP BY species_set_id;
 13 rows in set (0.267 sec)
 ```
 
-## Join
+## JOIN
 
 Inner join.
 
@@ -107,6 +107,24 @@ JOIN genome_db g ON g.genome_db_id = s.genome_db_id limit 3;
 |          40788 | ciona_savignyi |
 +----------------+----------------+
 3 rows in set (0.252 sec)
+```
+
+A shortcut is using `JOIN` and `USING` when both tables have a column with the same name.
+
+```sql
+SELECT species_set_id, name
+FROM species_set
+JOIN genome_db USING(genome_db_id) limit 3;
+```
+```
++----------------+----------------+
+| species_set_id | name           |
++----------------+----------------+
+|          34350 | ciona_savignyi |
+|          35716 | ciona_savignyi |
+|          40788 | ciona_savignyi |
++----------------+----------------+
+3 rows in set (0.237 sec)
 ```
 
 ## GROUP_CONCAT
