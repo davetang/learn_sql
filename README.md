@@ -1,6 +1,7 @@
 ## Table of Contents
 
 - [SQL](#sql)
+  - [IN](#in)
   - [Subqueries](#subqueries)
   - [Join](#join)
   - [GROUP_CONCAT](#group_concat)
