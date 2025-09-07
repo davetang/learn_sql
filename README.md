@@ -6,6 +6,7 @@
   - [JOIN](#join)
   - [GROUP_CONCAT](#group_concat)
   - [HAVING](#having)
+  - [FIND_IN_SET](#find_in_set)
 
 # SQL
 
@@ -180,4 +181,34 @@ ORDER BY species_set_id LIMIT 10;
 |          35690 | procavia_capensis,homo_sapiens     |
 +----------------+------------------------------------+
 10 rows in set (0.246 sec)
+```
+
+## FIND_IN_SET
+
+FIND_IN_SET() is a handy shortcut (again it is not good practice) for searching comma-separated lists.
+
+```sql
+SELECT species_set_id, GROUP_CONCAT(name) AS species
+FROM species_set
+JOIN genome_db USING(genome_db_id)
+GROUP BY species_set_id
+HAVING FIND_IN_SET('homo_sapiens', species)
+LIMIT 10;
+```
+```
++----------------+------------------------------------+
+| species_set_id | species                            |
++----------------+------------------------------------+
+|          35674 | choloepus_hoffmanni,homo_sapiens   |
+|          35676 | oryctolagus_cuniculus,homo_sapiens |
+|          35678 | otolemur_garnettii,homo_sapiens    |
+|          35680 | dasypus_novemcinctus,homo_sapiens  |
+|          35682 | erinaceus_europaeus,homo_sapiens   |
+|          35684 | echinops_telfairi,homo_sapiens     |
+|          35686 | loxodonta_africana,homo_sapiens    |
+|          35687 | notamacropus_eugenii,homo_sapiens  |
+|          35689 | ochotona_princeps,homo_sapiens     |
+|          35690 | procavia_capensis,homo_sapiens     |
++----------------+------------------------------------+
+10 rows in set (0.248 sec)
 ```
